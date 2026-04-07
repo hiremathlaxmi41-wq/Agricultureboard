@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>IoT Dashboard</title>
+</head>
+
+<body style="text-align:center; font-family:Arial;">
+
+<h1>🌱 IoT Agricultural System</h1>
+
+<p>City: <span id="city"></span></p>
+<p>Time: <span id="time"></span></p>
+<p>Temperature: <span id="temp"></span></p>
+<p>Moisture: <span id="moisture"></span></p>
+<p>Rain: <span id="rain"></span></p>
+
+<script>
+const token = "z4nY2FufwJwatjjfGvJjLVvUM7HB7nxZ";
+
+async function getData(pin) {
+  let res = await fetch(`https://blynk.cloud/external/api/get?token=${token}&${pin}`);
+  return await res.text();
+}
+
+async function update() {
+  document.getElementById("city").innerText = await getData("V0");
+  document.getElementById("time").innerText = await getData("V1");
+  document.getElementById("temp").innerText = await getData("V2");
+  document.getElementById("moisture").innerText = await getData("V5");
+  document.getElementById("rain").innerText = await getData("V4");
+}
+
+setInterval(update, 2000);
+update();
+</script>
+
+</body>
+</html>
